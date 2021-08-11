@@ -1,26 +1,13 @@
 <template>
-  <ejs-chart>
-      <e-series-collection>
-          <e-series :dataSource='seriesData' type='Line' xName='x' yName='y'> </e-series>
-      </e-series-collection>
-  </ejs-chart>
+    <ejs-chart id="container" :title='title' :primaryXAxis='primaryXAxis'>
+        <e-series-collection>
+            <e-series :dataSource='seriesData' type='Line' xName='month' yName='sales' name='Sales'> </e-series>
+        </e-series-collection>
+    </ejs-chart>
 </template>
 
 <script>
-import { ChartComponent, SeriesCollectionDirective, SeriesDirective, LineSeries, Legend, Chart } from "@syncfusion/ej2-vue-charts";
-import { createApp } from "vue";
-
-Chart.Inject(LineSeries, Legend);
-
-const app = createApp({
-  // Displays "Hello, World" initially, changes based on input
-  template: '<app></app>'
-}); 
-
-// Register the `hello` component
-var itemVue = app.component('itemTemplate', {
-  data: () => ({}),
-});  
+import { ChartComponent, SeriesCollectionDirective, SeriesDirective, LineSeries, Legend, Category } from "@syncfusion/ej2-vue-charts";
  
 export default {
   name: "App",
@@ -31,28 +18,21 @@ export default {
   },
   data() {
     return {
+      primaryXAxis: {
+        valueType: 'Category'
+      },
       seriesData: [
-        { x: 10, y: 21 },
-        { x: 20, y: 24 },
-        { x: 30, y: 36 },
-        { x: 40, y: 38 },
-        { x: 50, y: 54 },
-        { x: 60, y: 57 },
-        { x: 70, y: 70 }
+        { month: 'Jan', sales: 35 }, { month: 'Feb', sales: 28 },
+        { month: 'Mar', sales: 34 }, { month: 'Apr', sales: 32 },
+        { month: 'May', sales: 40 }, { month: 'Jun', sales: 32 },
+        { month: 'Jul', sales: 35 }, { month: 'Aug', sales: 55 },
+        { month: 'Sep', sales: 38 }, { month: 'Oct', sales: 30 },
+        { month: 'Nov', sales: 25 }, { month: 'Dec', sales: 32 }
       ],
-      itemTemplate:  function() {
-        return { template: itemVue };
-      }
     };
+  },
+  provide: {
+    chart: [ LineSeries, Legend, Category ]
   },
 };
 </script>
-
-<style>
-@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
-@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
-
-button {
-  margin: 25px 5px 20px 20px;
-}
-</style>
